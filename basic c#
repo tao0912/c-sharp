@@ -1,0 +1,245 @@
+using System;
+//change to one person check in and out
+//check in and out day
+//bool funciton
+//kitchen add to room option, only for guest in hotel. 
+//add the food bill to the room bill
+namespace ConsoleApp4
+{
+     abstract class Hotel
+    {
+        public struct Room //struct for each room
+        {
+            public int guestNum;
+            public int arrRoomNum;
+            public string name;//max should be four people
+            public int id;
+            public int phonenum;
+            public int dayIn;
+            public int dayOut;
+        };
+        public Room[,] arrRoom = new Room[3, 4];
+
+        /*
+        Room hroom;//hotel room;
+        private int guestnum;
+        public int Guestnum//property
+        {
+            get
+            {
+                return guestnum;
+            }
+            set
+            {
+                guestnum = value;
+            }
+        }
+        */
+
+        /*
+            //floor one is for 1, floor two is for 2
+            {//floor three is for 3, 
+                {101,102,103,104},
+                {201,202,203,204},
+                {301,302,303,304},
+            };
+        */
+
+        public abstract void Show();
+        public abstract void Add(int none, int none2);
+        public abstract void Edit(string[] order);
+        public abstract void Delete();
+        public abstract void Bill();
+        public abstract bool empty();
+    }
+    abstract class FrontDesk : Hotel//show the 2d arrary for the room 
+    {
+        public override void Show()
+        {
+            Console.WriteLine("Rooms: ");
+            arrRoom[3,]
+             {//floor three is for 3, 
+                { 101,102,103,104},
+                { 201,202,203,204},
+                { 301,302,303,304},
+            };
+
+            /*
+            for (int i=0;i<4;i++)
+            {
+                for (int j=0;j<5;j++)
+                {
+                    Console.WriteLine(arrRoom[i, j].arrRoomNum[i, j]+"\t");
+                    Console.WriteLine(arrRoom[i, j].guestNum + "\t");
+                }
+                Console.WriteLine("\n");
+            }
+            */
+        }
+        public override void Add(int none, int none2)//first person in the hotel
+        {
+            Console.WriteLine("Number of Guest\n");
+            arrRoom[0, 0].guestNum = int.Parse(Console.ReadLine());
+            Console.WriteLine("Name of Guest (one person)\n");
+            arrRoom[0, 0].name = Console.ReadLine();
+            Console.WriteLine("ID\n");
+            arrRoom[0, 0].id = int.Parse(Console.ReadLine());
+            Console.WriteLine("Phone Nnumber \n");
+            arrRoom[0, 0].phonenum = int.Parse(Console.ReadLine());
+            Console.WriteLine("Room Number \n");
+            arrRoom[0, 0].arrRoomNum = int.Parse(Console.ReadLine());
+        }
+        public override void Edit(string[] none)
+        {
+            int choose;
+            Console.WriteLine("What would you like to change \n");
+            Console.WriteLine("1.Name\n2.Phone Number\n3.Room Number");
+            choose = int.Parse(Console.ReadLine());
+            if (choose == 1)
+            {
+                Console.WriteLine("Change Name\n");
+                arrRoom[0, 0].name = Console.ReadLine();
+            }
+            else if (choose == 2)
+            {
+                Console.WriteLine("Phone NUmber\n");
+                arrRoom[0, 0].phonenum = int.Parse(Console.ReadLine());
+            }
+            else if (choose == 3)
+            {
+                Console.WriteLine("Room Number\n");
+                arrRoom[0, 0].arrRoomNum = int.Parse(Console.ReadLine());
+            }
+            else
+            {
+                Console.WriteLine("Enter wrong choose");
+                //break
+            }
+        }
+        public override void Delete()
+        {
+            int choose;
+            Console.WriteLine("Enter the room number that u want to delete");
+            choose = int.Parse(Console.ReadLine());
+            for (int i = 0; i < 4; i++)
+            {
+                for (int j = 0; j < 5; j++)
+                {
+                    if (choose == arrRoom[i, j].arrRoomNum)
+                    {
+                        arrRoom[0, 0].guestNum = 0;
+                        arrRoom[0, 0].name = "none";
+                        arrRoom[0, 0].id = 0;
+                        arrRoom[0, 0].phonenum = 0;
+                    }
+                }
+            }
+        }
+        public override void Bill()
+        {
+            int choose;
+            Console.WriteLine("Enter the room number that u want to pay the bill for");
+            choose = int.Parse(Console.ReadLine());
+            if (choose <= 105)
+            {
+                Console.WriteLine("One Person Room: $ 100");
+                Delete();
+            }
+            else if (choose <= 205)
+            {
+                Console.WriteLine("two Person Room: $ 160");
+                Delete();
+            }
+            else if (choose <= 305)
+            {
+                Console.WriteLine("Three Person Room: $ 250");
+                Delete();
+            }
+            else if (choose <= 405)
+            {
+                Console.WriteLine("Four Person Room: $ 340");
+                Delete();
+            }
+        }
+        static void Main()
+        {
+            // public Room[,] arrRoom = new Room[4,5];   //4 is the max number of guest we can have in one room
+            Console.WriteLine("main");
+            Hotel hotel = new Hotel();//object of hotel
+            FrontDesk frontDesk = new FrontDesk();
+            frontDesk.Show();
+        }
+    }
+    abstract class Kitchen : Hotel
+    {
+        public string[] food = { "salad", "steak", "sandwich", "tuna", "rice", "shrimp", "soup" };
+        public string[] order = new string[10];
+        public void roomnum()
+        {
+            Console.WriteLine("Enter the room number: ");
+            
+        }
+        public override void Show()
+        {
+            int num, choose;
+            Console.WriteLine("Welcome to Online Menu \n");
+            Console.WriteLine("1. salad \n ");
+            Console.WriteLine("2. steak \n ");
+            Console.WriteLine("3. sandwich \n ");
+            Console.WriteLine("4. tuna \n ");
+            Console.WriteLine("5. rice \n ");
+            Console.WriteLine("6. shrimp \n ");
+            Console.WriteLine("7. soup \n ");
+            Console.WriteLine("Enter number for food you want to order\n");
+            num = int.Parse(Console.ReadLine());
+            for (int i = 0; i < num; i++)
+            {
+                Console.WriteLine("Enter the food number you want to order\n");
+                choose = int.Parse(Console.ReadLine());
+                Add(choose, num);
+            }
+        }
+        public override void Add(int choose, int num)
+        {
+
+            for (int i = 0; i < num; i++)
+            {
+                order[i] = food[choose - 1];
+            }
+        }
+        public override void Edit(string[] order)
+        {
+            int i = 0;
+            int choose;
+            while (order[i] != null)
+            {
+                Console.WriteLine("Food List\n");
+                Console.WriteLine(" i " + order[i] + "\n");
+                i++;
+            }
+            Console.WriteLine("Enter the food number that you want to edit \n");
+            choose = int.Parse(Console.ReadLine());
+            order[i] = null;
+        }
+        public override void Delete()
+        {
+            order = null;
+        }
+        public override void Bill()
+        {
+            int i = 0;
+            while (order[i] != null)
+            {
+                Console.WriteLine("Food List\n");
+                Console.WriteLine(" i " + order[i] + "\n");
+                i++;
+            }
+            Console.WriteLine("Price: \n");
+            Console.WriteLine("$" + i * 50);
+            Delete();
+        }
+    }
+}
+
+
+
